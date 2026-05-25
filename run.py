@@ -133,7 +133,7 @@ def main() -> None:
         "--server.port",
         str(frontend_port),
         "--server.address",
-        "127.0.0.1",
+        "0.0.0.0",
     ]
     frontend_proc = subprocess.Popen(
         frontend_cmd,
