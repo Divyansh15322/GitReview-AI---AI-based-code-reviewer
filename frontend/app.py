@@ -137,7 +137,7 @@ def main():
             """, unsafe_allow_html=True)
             
             # Expose the API auth endpoint URL to Streamlit button
-            auth_url = f"http://localhost:8000/api/v1/auth/login"
+            auth_url = f"{API_BASE}/auth/login"
             st.markdown(f'<a href="{auth_url}" target="_self"><button style="width:100%; height:40px; background-color:#24292e; color:white; border:1px solid #444d56; border-radius:6px; cursor:pointer; font-weight:600;">🔐 Connect with GitHub</button></a>', unsafe_allow_html=True)
             st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 

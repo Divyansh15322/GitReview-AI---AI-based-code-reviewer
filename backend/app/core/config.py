@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     # Core Application Settings
     APP_ENV: str = "development"
     APP_URL: str = "http://localhost:8000"
+    FRONTEND_URL: str = "http://localhost:8501"
     DEMO_MODE: bool = True
     
     # FastAPI Backend Configuration

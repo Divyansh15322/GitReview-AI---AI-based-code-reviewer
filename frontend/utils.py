@@ -9,7 +9,7 @@ API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000/api/v1")
 class APIClient:
     def __init__(self):
         self.base_url = API_BASE
-        self.client = httpx.Client(timeout=20.0)
+        self.client = httpx.Client(timeout=httpx.Timeout(8.0, connect=3.0))
 
     def get_headers(self) -> Dict[str, str]:
         headers = {}

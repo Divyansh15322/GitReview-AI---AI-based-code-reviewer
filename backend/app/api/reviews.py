@@ -3,7 +3,6 @@ from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from backend.app.core.database import get_db
 from backend.app.services.github import GitHubService
-from backend.app.agents import run_code_review_workflow
 from backend.app.crud import (
     get_repository_by_full_name, create_pull_request, get_pull_request_by_number,
     create_review, update_review, create_review_comment, get_review_with_comments,
@@ -57,7 +56,9 @@ async def trigger_review_pipeline_task(
             })
             return
 
-        # Run multi-agent LangGraph workflow
+        # Run multi-agent LangGraph workflow. Import lazily so API startup stays fast.
+        from backend.app.agents import run_code_review_workflow
+
         final_state = await run_code_review_workflow(
             repository_id=repo_id,
             repository_full_name=repo.full_name,

@@ -6,7 +6,6 @@ import git
 from backend.app.core.config import settings
 from backend.app.core.database import get_db
 from backend.app.services.github import GitHubService
-from backend.app.services.vector_db import VectorDBService
 from backend.app.crud import (
     get_repository_by_full_name, create_repository, get_repositories_by_user,
     get_repository, update_repository_indexing_status, get_user
@@ -40,6 +39,8 @@ async def background_index_repo(repo_id: int, repo_full_name: str, access_token:
             git.Repo.clone_from(clone_url, temp_dir, depth=1) # shallow clone for maximum performance
             
         # 3. Index using Vector DB service
+        from backend.app.services.vector_db import VectorDBService
+
         vector_service = VectorDBService()
         success = await vector_service.index_repository(repo_full_name, temp_dir)
         
@@ -229,7 +230,8 @@ async def search_repository_codebase(
     if not repo:
         raise HTTPException(status_code=404, detail="Repository not found")
         
+    from backend.app.services.vector_db import VectorDBService
+
     vector_service = VectorDBService()
     results = await vector_service.search_codebase(repo.full_name, query, k=4)
     return results
-

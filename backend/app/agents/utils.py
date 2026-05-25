@@ -5,7 +5,6 @@ from typing import List, Dict, Any, Optional
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from backend.app.core.config import settings
-from backend.app.services.vector_db import VectorDBService
 
 def get_llm():
     """
@@ -42,6 +41,8 @@ async def query_rag_for_diff(state: Dict[str, Any], file_path: str, diff_content
     """
     if settings.DEMO_MODE:
         return "[RAG Context]: Found stripe client configurations and database schemas matching payment service."
+
+    from backend.app.services.vector_db import VectorDBService
 
     vector_service = VectorDBService()
     safe_query = f"File: {file_path}. Changes: {diff_content[:300]}"

@@ -38,7 +38,7 @@ async def github_callback(code: str = Query(...), db: AsyncSession = Depends(get
     Processes the GitHub callback, exchanges authorization code for an access token,
     registers or updates the user profile in our database, and redirects back to Streamlit.
     """
-    frontend_target_url = "http://localhost:8501"  # Streamlit default port
+    frontend_target_url = settings.FRONTEND_URL
 
     # 1. Bypassed Callback Flow for offline Demo Mode
     if settings.DEMO_MODE or code == "mock_oauth_code" or not settings.GITHUB_CLIENT_ID:
