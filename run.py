@@ -85,7 +85,7 @@ def main() -> None:
     os.makedirs(os.path.join(root_dir, "chroma_db"), exist_ok=True)
 
     backend_port = find_free_port(8000, 8100)
-    frontend_port = find_free_port(8501, 8600)
+    frontend_port = int(os.environ.get("PORT", 8501))
     backend_url = f"http://127.0.0.1:{backend_port}"
     frontend_url = f"http://127.0.0.1:{frontend_port}"
 
